@@ -1,0 +1,22 @@
+{
+  "name": "dylan-ipsum",
+  "version": "1.0.0",
+  "license": "MIT",
+  "main": "index.js",
+  "type": "module",
+  "description": "A JavaScript module for generating passages of placeholder text from Bob Dylan lyrics.",
+  "repository": "brodysmith1/dylan-ipsum-npm",
+  "keywords": [
+    "lorem",
+    "ipsum",
+    "text",
+    "dummy",
+    "filler",
+    "placeholder",
+    "bob",
+    "dylan",
+    "music",
+    "poetry",
+    "songs"
+  ]
+}
