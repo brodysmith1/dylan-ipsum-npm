@@ -25,7 +25,7 @@ const bob = new DylanIpsum()
 const bob2 = new DylanIpsum({
   years: [1963, 1967],
   phraseLength: [10, 20],
-  paragraphLength: 150
+  paragraphLength: [100, 150]
 })
 
 bob.words(3)        // ["Ramble", "Highway", "Wiggle"]
@@ -33,7 +33,7 @@ bob.phrases(2)      // ["With no direction home", "Purple clover, Queen Anne’s
 bob.paragraphs(1)   // ["I’m sailin’ away my ... across that lonesome ocean."]
 ```
 
-You can also override default lengths per function call:
+You can also override default lengths on a function call:
 ```
 bob.phrases(5, [10, 20])  // 5 phrases between 10–20 words
 bob.paragraphs(7, 120)    // 7 paragraphs of exactly 120 words
