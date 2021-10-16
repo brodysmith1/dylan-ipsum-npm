@@ -100,7 +100,7 @@ class DylanIpsum {
         between(options.years[0], options.years[1], s.year))
 
       if (!list.length) {
-        console.warn(
+        console.error(
           `Dylan Ipsum: No songs found for specified years [${options.years}].`,
           `Using all available years [${defaults.years}]`
         )
@@ -116,7 +116,7 @@ class DylanIpsum {
     if (range.length === 1) range = [range[0], range[0]]
     
     if (range[1] < defaults[0]) {
-      console.warn(
+      console.error(
         `Dylan Ipsum: ${range[1]} too small for maximum. Using smallest allowable maximum`,
         `(${defaults[0]} words)`
       )
@@ -124,7 +124,7 @@ class DylanIpsum {
     }
     
     if (range[0] > defaults[1]) {
-      console.warn(
+      console.error(
         `Dylan Ipsum: ${range[0]} too large for minimum. Using largest allowable minimum`,
         `(${defaults[1]} words)`
       )
