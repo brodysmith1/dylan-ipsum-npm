@@ -15,7 +15,7 @@ import {
 class DylanIpsum {
   
   constructor(options) {
-    this.config = defaults
+    this.config = {...defaults}
     this.songs = this.validate(options)
     
     if (options) {
@@ -25,10 +25,9 @@ class DylanIpsum {
   }
   
   paragraphs(n, range = this.config.paragraphLength) {
-    if (this.error) return this.warn()
-    range = this.adjustRanges(range, this.config.paragraphLength)
+    range = this.adjustRanges(range, defaults.paragraphLength)
     
-    let song, start, end, count, text, last
+    let song, start, end, count, text
     let [min, max] = minmax(range)
 
     let list = new Array(n).fill(0)
@@ -59,8 +58,7 @@ class DylanIpsum {
   }
   
   phrases(n, range = this.config.phraseLength) {
-    if (this.error) return this.warn()
-    range = this.adjustRanges(range, this.config.phraseLength)
+    range = this.adjustRanges(range, defaults.phraseLength)
     
     let song, subset
     let [min, max] = minmax(range)
@@ -80,8 +78,6 @@ class DylanIpsum {
   }
 
   words(n) {
-    if (this.error) return this.warn()
-    
     let list = new Array(n).fill(0)
       .map(() => pluck(this.songs).lyrics)
       .map((l) => 
@@ -104,8 +100,12 @@ class DylanIpsum {
         between(options.years[0], options.years[1], s.year))
 
       if (!list.length) {
-        this.error = `No songs found in specified years: ${options.years}`
-        this.warn()
+        console.warn(
+          `Dylan Ipsum: No songs found for specified years [${options.years}].`,
+          `Using all available years [${defaults.years}]`
+        )
+        this.config.years = defaults.years
+        list = database
       }
     }
     return list
@@ -116,22 +116,22 @@ class DylanIpsum {
     if (range.length === 1) range = [range[0], range[0]]
     
     if (range[1] < defaults[0]) {
+      console.warn(
+        `Dylan Ipsum: ${range[1]} too small for maximum. Using smallest allowable maximum`,
+        `(${defaults[0]} words)`
+      )
       range[1] = defaults[0]
-      console.warn("Targeted maximum out of range. Using smallest possible maximum ", `(${defaults[0]})`)
     }
     
     if (range[0] > defaults[1]) {
+      console.warn(
+        `Dylan Ipsum: ${range[0]} too large for minimum. Using largest allowable minimum`,
+        `(${defaults[1]} words)`
+      )
       range[0] = defaults[1]
-      console.warn("Specified minimum out of range. Using largest possible minimum ", `(${defaults[1]})`)
     }
-      
+
     return range
-  }
-  
-  warn(fn) {
-    if (fn) console.error("Could not execute ", fn)
-    console.error("Error: ", this.error)
-    return null
   }
 
 }

@@ -14,31 +14,37 @@ npm i dylan-ipsum
 
 ## Usage
 ```
-import { DylanIpsum } from "dylan-ipsum"
+import DylanIpsum from "dylan-ipsum"
 
+// Use default settings
 const bob = new DylanIpsum()
-const bob = new DylanIpsum({ years: 1962 })
-const bob = new DylanIpsum({ years: [1962, 1970] })
 
-bob.words(1)
-bob.phrases(5)
-bob.paragraphs(7)
+// Specify custom settings
+const bob2 = new DylanIpsum({
+  years: [1962, 1970],
+  phraseLength: 10,
+  paragraphLength: [150, 200]
+})
 
-// Instance-specific min/max
-bob.phrases(5, [10,20])
-bob.paragraphs(7, 120)
+bob.words(3)        // ["Ramble", "Highway", "Wiggle"]
+bob.phrases(2)      // ["Just take everything down to Highway 61", "Purple clover, Queen Anne’s lace"]
+bob.paragraphs(1)   // ["I’m sailin’ away my own true love. I’m sailin’ away in ... across that lonesome ocean."]
+
+// You can also specify instance-specific wordcount ranges
+bob.phrases(5, [10, 20])  // 5 phrases between 10–20 words
+bob.paragraphs(7, 120)    // 7 paragraphs of exactly 120 words
 ```
 
 ## Options
 
-Default values shown below.
+Default values are shown below.
 
-`paragraphLength` and `phraseLength` are [min, max] arrays denoting word count. A fixed value can also be provided.
+`paragraphLength` and `phraseLength` are [min, max] arrays denoting word count. A single value can also be provided.
 
 ```
 const options = {
-  paragraphLength: [5, 200],
-  phraseLength: [2, 20],
-  years: [1962, 2020]
+  "paragraphLength": [50, 200],
+  "phraseLength": [5, 15],
+  "years": [1962, 2020]
 }
 ```
