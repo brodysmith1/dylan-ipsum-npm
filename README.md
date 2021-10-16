@@ -1,11 +1,11 @@
 # dylan-ipsum-npm
 A JavaScript module for generating placeholder text from Bob Dylan lyrics.
 
-Bob's catalogue includes 136,392 words, 520 mentions of love, 52 mentions of law, and 5 mentions of ... country pie.
+Bob's catalogue has 136,392 words, 520 mentions of love, 52 mentions of law, and 5 mentions of ... country pie.
 
-If you want to show some ❤️ for this project, let's grab [a coffee](https://www.buymeacoffee.com/brods).
+If you're just after some quick filler text without adding another package to your project, consider using the project site instead: [https://www.dylanlyrics.app/](https://www.dylanlyrics.app/)
 
-To quickly grab a few random lyrics, use the project site: [https://www.dylanlyrics.app/](https://www.dylanlyrics.app/)
+To show some ❤️ for this project, let's grab [a coffee](https://www.buymeacoffee.com/brods).
 
 Enjoy!
 
