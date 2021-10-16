@@ -44,9 +44,9 @@ bob.paragraphs(7, 120)    // 7 paragraphs of exactly 120 words
 
 The `DylanIpsum` class contains 3 functions. Each return an array of _n_ length:
 
-- `bob.words(n)`: A capitalised word. Good for menu items and small lists.
-- `bob.phrases(n)`: A single line. Good for lists, titles and taglines.
-- `bob.paragraphs(n)`: A block of lyrics. Good for body content.
+- `bob.words(n)` – A capitalised word. Good for menu items and small lists.
+- `bob.phrases(n)` – A single line. Good for lists, titles and taglines.
+- `bob.paragraphs(n)` – A block of lyrics. Good for body content.
 
 
 ## Options
