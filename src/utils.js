@@ -1,8 +1,5 @@
 export const rand = n => Math.floor(Math.random() * n)
 
-// Return the [min, max] of an array of numbers
-export const minmax = (arr) => [Math.min(...arr), Math.max(...arr)]
-
 // check if value v is between [a,b]
 export const between = (a,b,v) => v >= a && v <= b
 
@@ -33,4 +30,22 @@ export const punctuate = str => {
 		str = str.slice(0, str.length - 1) + "."
 
 	return str
+}
+
+// Return a [min, max] array from specified range
+export const minmax = (range, bounds, type) => {
+	if (typeof range === "number") range = [range, range]
+	if (range.length === 1) range = [range[0], range[0]]
+	
+	if (range[1] < bounds[0]) {
+		console.error(`Dylan Ipsum: ${range[1]} too small for ${type} maximum. Using ${bounds[0]} word max.`)
+		range[1] = bounds[0]
+	}
+	
+	if (range[0] > bounds[1]) {
+		console.error(`Dylan Ipsum: ${range[0]} too large for ${type} minimum. Using ${bounds[1]} word min.`)
+		range[0] = bounds[1]
+	}
+
+	return [Math.min(...range), Math.max(...range)]
 }

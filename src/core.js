@@ -25,14 +25,11 @@ class DylanIpsum {
   }
   
   paragraphs(n, range = this.config.paragraphLength) {
-    range = this.adjustRanges(range, defaults.paragraphLength)
-    
     let song, start, end, count, text
-    let [min, max] = minmax(range)
-
+    let [min, max] = minmax(range, [10,400], "paragraph")
+    
     let list = new Array(n).fill(0)
-      .map(() => {
-        
+      .map(() => {  
         do {
           song = pluck(this.songs)
           count = wordcount(song)
@@ -40,7 +37,7 @@ class DylanIpsum {
         
         // Pick random start and end indices
         start = count > max ? rand(count - max) : 0
-        end = min + start + rand(max - min)
+        end = min + start + rand(max - min) + 1
         
         // Stringify and slice the lyrics
         text = format(song.lyrics.flat())
@@ -58,17 +55,15 @@ class DylanIpsum {
   }
   
   phrases(n, range = this.config.phraseLength) {
-    range = this.adjustRanges(range, defaults.phraseLength)
-    
     let song, subset
-    let [min, max] = minmax(range)
+    let [min, max] = minmax(range, [1,14], "phrase")
 
     let list = new Array(n).fill(0)
       .map(() => {
         do {
           song = pluck(this.songs)
-          subset = song.lyrics.flat(2)
-            .filter((s) => between(min, max, s.split(/\s/).length))
+          subset = song.lyrics.flat(2).filter((s) =>
+            between(min, max, s.split(/\s/).length))
         } while (!subset.length)
         
         return pluck(subset)
@@ -77,18 +72,34 @@ class DylanIpsum {
     return list
   }
 
+  titles(n, range = this.config.titleLength) {
+    let title
+    let [min, max] = minmax(range, [1, 8], "title")
+
+    let list = new Array(n).fill(0)
+      .map(() => {
+        do title = pluck(this.songs).title
+        while (!between(min, max, title.split(/\s/).length))
+        return title
+      })
+
+    return list
+  }
+  
   words(n) {
+    let words, w
     let list = new Array(n).fill(0)
       .map(() => pluck(this.songs).lyrics)
-      .map((l) => 
-        pluck(l.join(" ").split(RX.WORD_BOUNDARIES)
-          .map(w => w.replace(RX.JUNK, "").replace(RX.NUMS, ""))
-          .filter(w => w.length > 3 && !w.match(RX.EXCLUDE))
-          .map(capitalise)
-        )
-      )
+      .map((l) => {
+        words = l.join(" ").split(RX.WORD_BOUNDARIES)
+        do w = pluck(words)
+        while(w.length < 4 || w.match(RX.EXCLUDE))
+        return w
+      })
     
     return list
+      .map(capitalise)
+      .map(w => w.replace(RX.JUNK, "").replace(RX.NUMS, ""))
   }
   
   validate(options, list = database) {
@@ -109,29 +120,6 @@ class DylanIpsum {
       }
     }
     return list
-  }
-  
-  adjustRanges(range, defaults) {
-    if (typeof range === "number") range = [range, range]
-    if (range.length === 1) range = [range[0], range[0]]
-    
-    if (range[1] < defaults[0]) {
-      console.error(
-        `Dylan Ipsum: ${range[1]} too small for maximum. Using smallest allowable maximum`,
-        `(${defaults[0]} words)`
-      )
-      range[1] = defaults[0]
-    }
-    
-    if (range[0] > defaults[1]) {
-      console.error(
-        `Dylan Ipsum: ${range[0]} too large for minimum. Using largest allowable minimum`,
-        `(${defaults[1]} words)`
-      )
-      range[0] = defaults[1]
-    }
-
-    return range
   }
 
 }
